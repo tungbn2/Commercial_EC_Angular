@@ -1,0 +1,396 @@
+<div class="container">
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-bar" aria-label="breadcrumb">
+    <ol class="breadcrumb mt-3 mb-3">
+      <li class="breadcrumb-item">
+        <a routerLink="/" class="text-decoration-none fw-bolder fs-6">Home</a>
+      </li>
+      <li class="breadcrumb-item active fw-bolder fs-6" aria-current="page">
+        Product Detail
+      </li>
+    </ol>
+  </nav>
+
+  <div class="main-product">
+    <div class="row">
+      <!-- left image -->
+      <div class="col-12 col-md-5">
+        <!-- casousel -->
+        <div
+          id="carouselExampleControls"
+          class="carousel slide rounded"
+          data-bs-ride="carousel"
+        >
+          <div class="carousel-inner">
+            <div
+              class="carousel-item"
+              [class]="{ active: i == 0 ? true : false }"
+              *ngFor="let img of productDetail?.images; index as i"
+            >
+              <img
+                [src]="
+                  img.url ||
+                  'https://hanoicomputercdn.com/media/product/58134_hp_p21v__5_.png'
+                "
+                [appImgErr]="
+                  'https://hanoicomputercdn.com/media/product/58134_hp_p21v__5_.png'
+                "
+                class="d-block w-100 slide-img"
+                alt="..."
+              />
+            </div>
+
+            <!-- if not have image -->
+            <div
+              class="carousel-item active"
+              *ngIf="!productDetail?.images?.length"
+            >
+              <img
+                src="
+                  https://hanoicomputercdn.com/media/product/58134_hp_p21v__5_.png
+                "
+                class="d-block w-100 slide-img"
+                alt="..."
+              />
+            </div>
+
+            <!--  -->
+          </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExampleControls"
+            data-bs-slide="prev"
+          >
+            <i
+              class="fa-solid fa-angle-left i-yellow fs-3 p-2 rounded-circle"
+              aria-hidden="true"
+            ></i>
+
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExampleControls"
+            data-bs-slide="next"
+          >
+            <i
+              class="fa-solid fa-angle-right i-yellow fs-3 p-2 rounded-circle"
+              aria-hidden="true"
+            ></i>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+
+        <!-- list m=image -->
+
+        <div class="row mt-2">
+          <!-- indicators -->
+          <!-- item -->
+          <div
+            class="col-3 d-flex align-items-center justify-content-center"
+            *ngFor="let img of productDetail?.images; index as i"
+            style="cursor: pointer"
+          >
+            <img
+              class="border border-1 rounded slide-img"
+              [src]="img.url"
+              [appImgErr]="
+                'https://hanoicomputercdn.com/media/product/58134_hp_p21v__5_.png'
+              "
+              alt=""
+              width="95%"
+              data-bs-target="#carouselExampleControls"
+              [attr.data-bs-slide-to]="i"
+              [attr.aria-label]="i"
+            />
+          </div>
+
+          <!-- item if not have any image -->
+          <div
+            class="col-3 d-flex align-items-center justify-content-center"
+            style="cursor: pointer"
+            *ngIf="!productDetail?.images?.length"
+          >
+            <img
+              class="border border-1 rounded slide-img"
+              src="https://hanoicomputercdn.com/media/product/58134_hp_p21v__5_.png"
+              alt=""
+              width="95%"
+              data-bs-target="#carouselExampleControls"
+              attr.data-bs-slide-to="1"
+              [attr.aria-label]="1"
+            />
+          </div>
+        </div>
+      </div>
+
+      <hr class="d-md-none mt-3" />
+
+      <!-- right details -->
+      <div class="col-12 col-md-7">
+        <!-- header -->
+        <div class="header-item w-100 text-wrap">
+          <p class="h2 text-wrap text-break">
+            {{ productDetail?.name | uppercase }}
+          </p>
+        </div>
+
+        <!-- review -->
+        <div class="review">
+          <div class="row">
+            <!-- star -->
+            <div class="stars">
+              <ul
+                class="custom-class rate p-0 m-0 bg-star d-inline"
+                [innerHTML]="renderRating(productDetail?.rating || 1)"
+              ></ul>
+
+              <span> | {{ productDetail?.numOfReviews }} Reviews</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <p class="mt-2">
+          {{ productDetail?.description }}
+        </p>
+        <hr class="mt-2 mb-2" />
+
+        <!-- info -->
+        <div class="infor d-flex">
+          <!-- stock -->
+          <span class="me-4" *ngIf="(productDetail?.countInStock || 0) > 0">
+            <span class="text-success fw-bold">In Stock: </span>
+            <span class="fw-bold">{{ productDetail?.countInStock }}</span>
+          </span>
+
+          <span class="me-4" *ngIf="(productDetail?.countInStock || 0) <= 0">
+            <span class="text-danger fw-bold">Out of Stock </span>
+          </span>
+
+          <!--  -->
+          <span class="fw-bold me-4">Brand: {{ productDetail?.brand }}</span>
+          <span class="fw-bold me-4"
+            >Category: {{ productDetail?.category }}</span
+          >
+        </div>
+
+        <!-- Price -->
+        <div class="price mt-3">
+          <p class="h2 fw-bold">{{ productDetail?.price | currency }}</p>
+        </div>
+
+        <!-- add to cart -->
+        <div
+          class="add-to-cart d-flex"
+          *ngIf="userId && (productDetail?.countInStock || 0) > 0"
+        >
+          <div class="quantity me-4 d-flex border-quantity">
+            <!-- minus -->
+            <button
+              class="btn border-0"
+              (click)="changeQuantity('m')"
+              [disabled]="quantity <= 1"
+            >
+              <i class="fa-solid fa-minus"></i>
+            </button>
+
+            <!-- input -->
+            <input
+              type="number"
+              class="form-control text-center border-0"
+              style="width: 50px"
+              min="1"
+              max="null"
+              [(ngModel)]="quantity"
+              (change)="checkQuantity()"
+            />
+
+            <!-- plus -->
+            <button
+              class="btn border-0"
+              (click)="changeQuantity('p')"
+              [disabled]="quantity >= (productDetail?.countInStock || 1)"
+            >
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+
+          <!-- button add -->
+          <button class="btn btn-add text-nowrap" (click)="AddToCart()">
+            <i class="fa-solid fa-cart-plus"></i>
+            <span class="fw-bold d-none d-sm-inline"> Add To Cart</span>
+          </button>
+        </div>
+
+        <!-- no-login -->
+        <div class="cart-no-login" *ngIf="!userId">
+          <p class="h3 text-yellow" (click)="GoToLogin()">
+            <i class="fa-solid fa-arrow-right-to-arc"></i> Login to buy
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- review -->
+  <hr class="mt-3 mb-2" />
+  <div class="review mt-2">
+    <div class="review-header">
+      <p class="h2">Reviews</p>
+    </div>
+
+    <div class="review-list" *ngIf="reviewList.length == 0">
+      <!-- review-item -->
+      <p class="fs-5 pb-2">Have no Review</p>
+      <hr />
+    </div>
+
+    <div class="review-list" *ngIf="reviewList.length !== 0">
+      <!-- review-item -->
+      <div
+        class="review-item border-bottom mt-2"
+        *ngFor="let review of reviewList"
+      >
+        <div class="row p-2">
+          <!-- avatar -->
+          <div class="col-2 col-lg-1 d-none d-sm-block">
+            <img
+              class="rounded-circle avatar"
+              [src]="review.userReview?.avatar || ''"
+              [appImgErr]="
+                'https://cf.shopee.vn/file/e78672db6328f6c20b1c407a7b92c676_tn'
+              "
+              alt=""
+              width="100%"
+            />
+          </div>
+
+          <!-- content -->
+          <div class="col-10 col-lg-11">
+            <p class="h4 mb-1">{{ review.userReview?.username }}</p>
+
+            <!-- stars -->
+            <div class="stars mb-2">
+              <ul
+                class="custom-class rate p-0 m-0 bg-star d-inline"
+                [innerHTML]="renderRating(review.rating)"
+              ></ul>
+
+              <!-- time -->
+              <span class="time mb-0">
+                | {{ review.createdAt | date: "longDate" }}</span
+              >
+            </div>
+
+            <!-- review des -->
+            <p class="mb-1">{{ review.content }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- pagination -->
+    <nav
+      aria-label="Page navigation example"
+      class="mt-2 d-flex justify-content-center"
+      *ngIf="(reviewData?.totalPages || 0) > 1"
+    >
+      <ul class="pagination">
+        <li class="page-item">
+          <button
+            class="page-link ms-1 me-1 border-0 text-secondary fs-5"
+            aria-label="Previous"
+            [disabled]="(reviewData?.currentPage || 0) <= 0"
+            (click)="ChangePage((reviewData?.currentPage || 0) - 1)"
+          >
+            <span aria-hidden="true">&laquo;</span>
+          </button>
+        </li>
+
+        <li
+          class="page-item"
+          [ngClass]="{ active: i == reviewData?.currentPage }"
+          *ngFor="let item of reviewData?.totalPages | numberArray; index as i"
+        >
+          <button
+            class="page-link ms-1 me-1 border-0 text-secondary fs-5"
+            (click)="ChangePage(i)"
+          >
+            {{ i + 1 }}
+          </button>
+        </li>
+
+        <li class="page-item">
+          <button
+            class="page-link ms-1 me-1 border-0 text-secondary fs-5"
+            aria-label="Next"
+            [disabled]="
+              (reviewData?.currentPage || 0) + 1 >=
+              (reviewData?.totalPages || 0)
+            "
+            (click)="ChangePage((reviewData?.currentPage || 0) + 1)"
+          >
+            <span aria-hidden="true">&raquo;</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+    <hr *ngIf="(reviewData?.totalPages || 0) > 1" />
+  </div>
+
+  <!-- form input-review -->
+  <form class="input-review row mt-3" #reviewForm="ngForm" *ngIf="!!userId">
+    <p class="h2">Write A Review</p>
+    <!-- stars -->
+    <div class="review-stars col-12 col-lg-8">
+      <p class="h4">Review Stars:</p>
+
+      <!-- select-star -->
+      <select
+        class="form-select"
+        aria-label="Default select example"
+        name="rating"
+        [(ngModel)]="rating"
+      >
+        <option value="5" selected>5 Stars Rating</option>
+        <option value="4">4 Stars Rating</option>
+        <option value="3">3 Stars Rating</option>
+        <option value="2">2 Stars Rating</option>
+        <option value="1">1 Stars Rating</option>
+      </select>
+    </div>
+
+    <!-- input -->
+    <div class="input-review mt-3 col-12 col-lg-8">
+      <p class="h4">Your Review:</p>
+      <textarea
+        name=""
+        id=""
+        rows="3"
+        class="form-control"
+        placeholder="Leave a comment here"
+        name="content"
+        ngModel
+        required
+        #content
+      ></textarea>
+
+      <button
+        class="btn btn-add fs-5 mt-3 mb-3"
+        [disabled]="reviewForm.invalid"
+        type="button"
+        (click)="PostReview(reviewForm.value)"
+      >
+        Post Your Review
+      </button>
+    </div>
+  </form>
+
+  <!-- <hr /> -->
+  <!-- related product -->
+  <!-- <div class="related-product">...</div> -->
+</div>

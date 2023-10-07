@@ -1,0 +1,16 @@
+.bg-star {
+  color: #faa230;
+}
+
+.item-img {
+  aspect-ratio: 1 / 1;
+  height: 100%;
+}
+
+.header-item {
+  overflow: hidden;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}

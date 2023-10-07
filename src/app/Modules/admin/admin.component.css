@@ -1,0 +1,32 @@
+
+p {
+  margin-bottom: 0!important;
+}
+.nav-admin {
+  width: 16%;
+}
+.hiddenMode {
+  display: none;
+}
+.overlay {
+  position: fixed;
+  background-color: rgba(0,0,0,0.35);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+
+}
+.content-admin {
+  width: 84%;
+}
+.fullView {
+  width: 100%;
+}
+.hidden {
+  opacity: 0;
+}
+.show {
+  opacity: 1;
+}

@@ -1,0 +1,183 @@
+<div class="create-product">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item cursor-pointer" routerLink="">Dashboard</li>
+      <li class="mx-2">/</li>
+      <li
+        class="breadcrumb-item active cursor-pointer"
+        aria-current="page"
+        routerLink="/admin/products"
+      >
+        Product
+      </li>
+      <li class="mx-2">/</li>
+      <li class="breadcrumb-item active" aria-current="page">
+        {{ isEditMode ? "Update product #" + productId : "Create product" }}
+      </li>
+    </ol>
+  </nav>
+  <form [formGroup]="productForm">
+    <div class="title d-flex justify-content-between align-items-center mb-0">
+      <h3 class="title-name"> {{isEditMode ? 'Update product #' + productId : 'Create product'}}</h3>
+      <div class="title-left">
+        <button
+          type="button"
+          class="btn btn-warning"
+          style="font-weight: 550"
+          [disabled]="!productForm.valid"
+          (click)="onSaveProduct(productId)"
+        >
+          {{ isEditMode ? "Update product" : "Add product" }}
+        </button>
+      </div>
+    </div>
+    <div class="row ">
+      <div class="col-lg-7">
+        <div class="form-block mx-2 mt-4">
+          <p class="title-block pb-2 ">Basic Information</p>
+          <hr class="mt-2" >
+          <div class="input-field required py-2">
+            <label>Name</label>
+            <input
+              type="text"
+              class="form-control mt-2"
+              formControlName="name"
+            />
+            <div *ngIf="isFieldValid('name')" class="text-danger">
+              <p *ngIf="isFieldHasError('name', 'required')">
+                Name is required field !
+              </p>
+            </div>
+          </div>
+          <div class="input-field required py-2">
+            <label>Description</label>
+            <textarea
+              class="form-control mt-2"
+              style="min-height: 85px"
+              formControlName="description"
+            ></textarea>
+            <div *ngIf="isFieldValid('description')" class="text-danger">
+              <p *ngIf="isFieldHasError('description', 'required')">
+                Description is required field !
+              </p>
+            </div>
+          </div>
+          <div class="input-field required py-2">
+            <label>Price</label>
+            <input
+              type="number"
+              class="form-control mt-2"
+              formControlName="price"
+            />
+            <div *ngIf="isFieldValid('price')" class="text-danger">
+              <p *ngIf="isFieldHasError('price', 'required')">
+                Price is required field !
+              </p>
+              <p *ngIf="isFieldHasError('price', 'min')">
+                Price is must be greater than 0 !
+              </p>
+            </div>
+          </div>
+          <div class="input-field required py-2">
+            <label>Brand</label>
+            <input
+              type="text"
+              class="form-control mt-2"
+              formControlName="brand"
+            />
+            <div *ngIf="isFieldValid('brand')" class="text-danger">
+              <p *ngIf="isFieldHasError('brand', 'required')">
+                Brand is required field !
+              </p>
+            </div>
+          </div>
+          <div class="input-field required py-2">
+            <label>Stock quantity</label>
+            <input
+              type="number"
+              class="form-control mt-2"
+              formControlName="countInStock"
+            />
+            <div *ngIf="isFieldValid('countInStock')" class="text-danger">
+              <p *ngIf="isFieldHasError('countInStock', 'required')">
+                Stock quantity is required field !
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="form-block mx-2 mt-4">
+          <p class="title-block pb-2 ">Images <span class="text-danger" *ngIf="isEditMode">( Not allow update images )</span></p>
+          <hr class="mt-2" >
+          <div class="input-field required input-group py-2">
+            <div class="row mb-2" *ngIf="imageFiles.length">
+              <span
+                class="col-lg-3 image-item"
+                *ngFor="let image of imageFiles; let i = index"
+                style="position: relative"
+              >
+                <img [src]="image" alt="image_product" width="100%" />
+                <span class="action-image">
+                  <span
+                    class="delete-img me-1"
+                    (click)="onDeleteImageFile(image)"
+                  >
+                    <i class="fas fa-times"></i>
+                  </span>
+                </span>
+              </span>
+            </div>
+            <i class="fas fa-file-upload fa-6x"></i>
+            <input
+              *ngIf="!isEditMode"
+              type="file"
+              #imageFileInput
+              (change)="onChangeImage($event)"
+              multiple
+              class="form-control mt-2"
+              formControlName="imageUrls"
+            />
+          </div>
+        </div>
+
+        <div class="form-block mx-2 mt-5" style="height: auto;">
+          <p class="title-block pb-2 ">Rating & Categories</p>
+          <hr class="mt-2" >
+          <div class="input-field required py-2">
+            <label>Categorie</label>
+            <input
+              type="text"
+              class="form-control mt-2"
+              formControlName="category"
+            />
+            <div *ngIf="isFieldValid('category')" class="text-danger">
+              <p *ngIf="isFieldHasError('category', 'required')">
+                Category is required field !
+              </p>
+            </div>
+          </div>
+          <div class="input-field required py-2">
+            <label>Rating</label>
+            <select
+              class="form-select form-control mt-2"
+              aria-label="Default select example"
+              formControlName="rating"
+            >
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+            <div *ngIf="isFieldValid('rating')" class="text-danger">
+              <p *ngIf="isFieldHasError('rating', 'required')">
+                Rating is required field !
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

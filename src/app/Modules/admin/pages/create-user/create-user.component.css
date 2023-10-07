@@ -1,0 +1,64 @@
+p {
+  margin-bottom: 0;
+}
+ul {
+  padding-left: 0;
+}
+.product-name:hover {
+  text-decoration: underline;
+}
+.filter-btn:hover {
+  background-color: #e9ecef;
+}
+.title-name {
+  font-size: var(--big-fs);
+  font-weight: 600;
+  letter-spacing: 0.75px;
+}
+.custom-class.rate i {
+  color: yellow;
+}
+/* $offcanvas-horizontal-width:300px; */
+.form-block {
+  background-color: white;
+  border-radius: 3px;
+  padding: 1.5rem ;
+  box-shadow: 0.5px 0.5px 12px rgba(0,0,0,0.35);
+}
+.form-block .title-block {
+  font-weight: 600;
+  font-size: var(--normal-fs);
+  letter-spacing: 0.5px;
+}
+.form-block hr {
+  margin-left: -1.5rem;
+  margin-right: -1.5rem;
+}
+.form-block .input-field {
+  flex-direction: column;
+}
+.form-block .input-field label {
+  font-weight: 500;
+  /* display: block; */
+  display: inline;
+  font-size: 17px;
+}
+.form-block .input-field .form-control {
+  width: 100%;
+}
+.input-field.required label {
+  position: relative;
+}
+.input-field.required label::after{
+  content: "*";
+  color: red;
+  position: absolute;
+  top: 0rem;
+  right: -0.75rem;
+}
+input.ng-invalid.ng-dirty {
+  border: red 1px solid;
+}
+.text-danger {
+  margin-top: 0.25rem;
+}

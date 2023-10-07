@@ -1,0 +1,186 @@
+<div class="order-history container mt-2 mb-2">
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-bar" aria-label="breadcrumb">
+    <ol class="breadcrumb mt-3 mb-3">
+      <li class="breadcrumb-item">
+        <a routerLink="/" class="text-decoration-none fw-bolder fs-6">Home</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a
+          routerLink="/order-history"
+          class="text-decoration-none fw-bolder fs-6"
+          >Order-History</a
+        >
+      </li>
+      <li class="breadcrumb-item active fw-bolder fs-6" aria-current="page">
+        Order #{{ orderId }}
+      </li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <!--  left nav -->
+    <div class="col-12 col-md-3">
+      <div class="list-group d-none d-md-block">
+        <!-- item -->
+        <a
+          routerLink="/my-profile"
+          class="list-group-item list-group-item-action"
+          aria-current="true"
+        >
+          <p class="h5 mt-2 mb-2 text-secondary">My Profile</p>
+        </a>
+
+        <!-- item -->
+        <a
+          routerLink="/order-history"
+          class="list-group-item list-group-item-action"
+          aria-current="true"
+        >
+          <p class="h5 mt-2 mb-2 text-secondary">Order History</p>
+        </a>
+
+        <!-- item -->
+        <a
+          class="list-group-item list-group-item-action"
+          aria-current="true"
+          (click)="Logout()"
+        >
+          <p class="h5 mt-2 mb-2 text-warning">Logout</p>
+        </a>
+      </div>
+    </div>
+
+    <!-- right table -->
+    <div class="col-12 col-md-9 mb-3">
+      <!-- order-header-->
+      <div class="order-header mb-3">
+        <p class="h3">Order Detail #{{ orderId }}</p>
+      </div>
+
+      <div class="">
+        <!-- order detail -->
+        <div class="form-block mx-2">
+          <div class="header">
+            <ul class="time" style="list-style-type: none">
+              <li class="my-2">
+                <i class="fas fa-calendar me-2" style="font-size: 18px"></i>
+                Created at: {{ order?.createdAt | date }}
+              </li>
+              <li class="my-2">
+                <i
+                  class="far fa-calendar-plus me-2"
+                  style="font-size: 18px"
+                ></i>
+                Updated at: {{ order?.updatedAt | date }}
+              </li>
+              <li class="my-2" style="color: gray">
+                Order ID: {{ order?.id }}
+              </li>
+            </ul>
+          </div>
+          <hr />
+          <div class="row infor">
+            <div class="col-lg-4">
+              <span class="d-flex">
+                <span class="icon"><i class="fas fa-user"></i></span>
+                <ul>
+                  <li>Customer</li>
+                  <li>
+                    ID User: <span>{{ order?.userId }}</span>
+                  </li>
+                  <li>
+                    Email:
+                    <span>{{ customerInfor?.email || "No Email Infor" }}</span>
+                  </li>
+                  <li>
+                    Phone:
+                    <span>{{
+                      customerInfor?.contact || "No Phone Infor"
+                    }}</span>
+                  </li>
+                </ul>
+              </span>
+            </div>
+            <div class="col-lg-4">
+              <span class="d-flex">
+                <span class="icon"><i class="fas fa-truck"></i></span>
+                <ul>
+                  <li>Order Info</li>
+                  <li>
+                    Status: <span>{{ order?.status }}</span>
+                  </li>
+                  <li>
+                    Pay method: <span>{{ order?.paymentMethod }}</span>
+                  </li>
+                  <li>
+                    Paided: <span>{{ order?.isPaid ? "Yes" : "No" }}</span>
+                  </li>
+                </ul>
+              </span>
+            </div>
+            <div class="col-lg-4">
+              <span class="d-flex">
+                <span class="icon"><i class="fas fa-map-marker-alt"></i></span>
+                <ul>
+                  <li>Deliver to</li>
+                  <li>
+                    Address: <span>{{ order?.address }}</span>
+                  </li>
+                  <li>
+                    Contact: <span>{{ order?.contact }}</span>
+                  </li>
+                  <li>Shipper: <span>GHTK</span></li>
+                </ul>
+              </span>
+            </div>
+          </div>
+          <hr />
+          <p class="title-block pb-2">Items</p>
+          <app-table
+            [templateOutlet]="templateOutlet"
+            [listColumnNames]="listOrderItemsColumnNames"
+            [filterOptional]="false"
+            [deleteItemOptional]="false"
+            [editItemOptional]="false"
+            [paginationOptional]="false"
+            [listData]="listItem"
+            (idClick)="HandleItemClick($event)"
+          >
+          </app-table>
+          <!-- template custom column -->
+          <ng-template #templateOutlet let-column="column" let-item="item">
+            <div class="custom-class" *ngIf="column.value === 'itemInfo'">
+              <div class="product d-flex">
+                <img
+                  [src]="item?.itemInfo?.images[0]?.url || ''"
+                  [appImgErr]="
+                    'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8c2hvZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60'
+                  "
+                  class="me-3 d-none d-md-block"
+                  style="width: 45px; height: 45px; border-radius: 3px"
+                />
+                <span>
+                  <p class="product-name mb-1">{{ item?.itemInfo?.name }}</p>
+                  <p
+                    style="font-size: 12px; color: #91979d"
+                    class="d-none d-md-block"
+                  >
+                    SKU: {{ item?.itemInfo?.category }} | Brand:
+                    {{ item?.itemInfo?.brand }}
+                  </p>
+                </span>
+              </div>
+            </div>
+            <div
+              class="custom-class"
+              *ngIf="column.value === 'price' || column.value === 'total'"
+            >
+              {{ item[column?.value] | number }}
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

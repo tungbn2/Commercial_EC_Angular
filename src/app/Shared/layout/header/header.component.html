@@ -1,0 +1,248 @@
+<div class="header sticky-top" style="background-color: #ffd333">
+  <!-- Top nav -->
+  <div class="top-nav">
+    <div class="container top-nav">
+      <div class="row">
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+          <ul class="list-inline mt-1 mb-1 d-flex justify-content-around">
+            <li class="list-inline-item">About Us</li>
+            <li class="list-inline-item">Contacts</li>
+            <li class="list-inline-item">Store</li>
+            <li class="list-inline-item">Track Orders</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container nav-bar">
+    <!-- main-nav -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container-fluid">
+        <a
+          class="navbar-brand"
+          [routerLink]="['']"
+          routerLinkActive="router-link-active"
+          ><h1 class="m-0 fw-bolder">Shop App</h1></a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="collapse navbar-collapse row mt-2 mb-2"
+          id="navbarSupportedContent"
+        >
+          <!-- search -->
+          <div class="search col-xs-12 col-md-10">
+            <div class="row gx-0">
+              <!-- category -->
+              <div class="col-3 d-none d-md-block text-end">
+                <div class="dropdown">
+                  <button
+                    class="btn btn-secondary dropdown-toggle rounded-0 categories"
+                    type="button"
+                    id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <i class="fa-solid fa-bars-staggered"></i> Categories
+                  </button>
+                  <ul
+                    class="dropdown-menu dropdown-menu-end dropdown-menu-dark"
+                    aria-labelledby="dropdownMenuButton1"
+                  >
+                    <li *ngFor="let item of Categories">
+                      <a class="dropdown-item" routerLink="/">{{ item }}</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-9">
+                <form class="d-flex">
+                  <input
+                    class="form-control rounded-0"
+                    type="search"
+                    placeholder="Search Product Here ..."
+                    aria-label="Search"
+                    name="search"
+                    [(ngModel)]="searchInput"
+                    (keydown.enter)="SearchProduct()"
+                  />
+                  <button
+                    class="btn btn-search rounded-0"
+                    type="button"
+                    (click)="SearchProduct()"
+                  >
+                    <i class="fas fa-search"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <hr class="d-md-none mt-2 mb-2" />
+          <!-- cart -->
+          <div class="col-12 col-md-1 text-md-center mt-2 mt-md-0">
+            <div class="dropdown d-none d-md-block">
+              <a
+                class="position-relative m-0 text-decoration-none"
+                type="button"
+                id="dropdownMenuButton2"
+                routerLink="/cart"
+                aria-expanded="false"
+              >
+                <i class="fas fa-cart-arrow-down fs-3 text-dark"></i>
+                <span
+                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                  *ngIf="AmoutInCart != 0"
+                >
+                  {{ AmoutInCart }}
+                  <span class="visually-hidden">unread messages</span>
+                </span>
+              </a>
+
+              <ul
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="dropdownMenuButton2"
+              >
+                <li>
+                  <a class="dropdown-item" routerLink="/cart">Go To Cart</a>
+                </li>
+              </ul>
+            </div>
+
+            <a
+              class="h5 d-md-none text-decoration-none text-dark"
+              routerLink="/cart"
+            >
+              <i class="fas fa-cart-arrow-down fs-3"></i> Go To Cart
+            </a>
+          </div>
+
+          <!-- user -->
+          <div class="col-12 col-md-1 mt-2 mt-md-0">
+            <!-- not login -->
+            <div class="dropdown d-none d-md-block" *ngIf="!isLogged">
+              <button
+                type="button"
+                class="btn"
+                data-bs-toggle="modal"
+                data-bs-target="#loginModal"
+              >
+                <i class="fa-regular fa-user fs-3 text-dark"></i>
+              </button>
+
+              <ul
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="dropdownMenuButton3"
+              >
+                <li>
+                  <a
+                    class="dropdown-item"
+                    data-bs-toggle="modal"
+                    data-bs-target="#loginModal"
+                    #loginBtn
+                    >Login</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    data-bs-toggle="modal"
+                    data-bs-target="#logoutModal"
+                    >Register</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <span
+              class="h5 d-md-none"
+              *ngIf="!isLogged"
+              data-bs-toggle="modal"
+              data-bs-target="#loginModal"
+              ><i class="fa-regular fa-user fs-3"></i> Login</span
+            >
+
+            <!-- logged -->
+            <div class="dropdown d-none d-md-block" *ngIf="isLogged">
+              <a
+                class=""
+                type="button"
+                id="dropdownMenuButton3"
+                routerLink="/my-profile"
+              >
+                <img
+                  [src]="avartarUrl"
+                  [appImgErr]="
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjCpHiToXmNRKw5jT14GV8dYXdrghcCpXiH4zYcUjZ97LEG4aQSw63eZnMNL6Tazjty0o&usqp=CAU'
+                  "
+                  alt="avatar"
+                  style="width: 35px; height: 35px; border-radius: 5px"
+                  class="border-1"
+                />
+              </a>
+
+              <ul
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="dropdownMenuButton3"
+              >
+                <li>
+                  <a class="dropdown-item" routerLink="/my-profile"
+                    >My Profile</a
+                  >
+                </li>
+                <li><a class="dropdown-item" (click)="Logout()">Logout</a></li>
+              </ul>
+            </div>
+
+            <a
+              class="h5 d-md-none text-decoration-none text-dark d-block"
+              routerLink="/my-profile"
+              *ngIf="isLogged"
+              ><img
+                [src]="avartarUrl"
+                [appImgErr]="
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjCpHiToXmNRKw5jT14GV8dYXdrghcCpXiH4zYcUjZ97LEG4aQSw63eZnMNL6Tazjty0o&usqp=CAU'
+                "
+                alt="avatar"
+                style="width: 30px; height: 30px; border-radius: 5px"
+                class="border-1"
+              />
+              My Account</a
+            >
+
+            <a
+              class="h5 d-md-none text-decoration-none text-dark d-block"
+              *ngIf="isLogged"
+              routerLink="/order-history"
+              style="cursor: pointer"
+              ><i class="fa-solid fa-clock-rotate-left"></i> Order History</a
+            >
+
+            <a
+              class="h5 d-md-none text-decoration-none text-danger d-block"
+              *ngIf="isLogged"
+              (click)="Logout()"
+              style="cursor: pointer"
+              ><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>
+
+<!-- authen pop-up -->
+<app-login></app-login>
+<app-logout></app-logout>
+<app-forgot-password></app-forgot-password>

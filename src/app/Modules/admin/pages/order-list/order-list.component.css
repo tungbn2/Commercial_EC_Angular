@@ -1,0 +1,33 @@
+p {
+  margin-bottom: 0;
+}
+ul {
+  padding-left: 0;
+}
+.product-name:hover {
+  text-decoration: underline;
+}
+.filter-btn:hover {
+  background-color: #e9ecef;
+}
+.title-name {
+  font-size: var(--big-fs);
+  font-weight: 600;
+  letter-spacing: 0.75px;
+}
+.custom-class.rate i {
+  color: yellow;
+}
+/* $offcanvas-horizontal-width:300px; */
+span.status-field {
+  border-radius: 15px;
+  color: #fff;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+span.status-field.paided {
+  background-color: #4b9528;
+}
+span.status-field.noPaided {
+  background-color: #e13a44;
+}

@@ -1,0 +1,23 @@
+.list-inline-item {
+  cursor: pointer;
+}
+
+.top-nav {
+  background-color: #c4c4c4;
+}
+
+.btn-search {
+  background-color: #c4c4c4;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+  margin-top: 0;
+}
+
+.dropdown:hover .dropdown-menu-end {
+  right: 0;
+  left: auto;
+}
+
+

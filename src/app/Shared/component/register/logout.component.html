@@ -1,0 +1,108 @@
+<!-- Login Modal -->
+<div
+  class="modal login-modal fade"
+  id="logoutModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-lg">
+    <div class="modal-content container">
+      <div class="row">
+        <div
+          class="col-md-6 col-xs-12 rounded d-flex justify-content-center flex-column align-items-center"
+          style="background-color: #faf096; min-height: 300px"
+        >
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            #closeBtn
+          ></button>
+          <p class="name-logo">Shop App</p>
+          <i class="fab fa-shopify mt-4" style="font-size: 6.5rem"></i>
+        </div>
+        <div class="col-md-6 col-xs-12 px-4 py-5">
+          <!-- form -->
+          <form class="example-form" #regisFrom="ngForm">
+            <p class="title">Welcome to Shop App</p>
+            <!-- username -->
+            <mat-form-field class="example-full-width">
+              <mat-label>User Name</mat-label>
+              <input
+                type="text"
+                matInput
+                name="username"
+                [(ngModel)]="UserRegis.username"
+                required
+                maxlength="25"
+                #username="ngModel"
+              />
+            </mat-form-field>
+
+            <!-- email -->
+            <mat-form-field class="example-full-width">
+              <mat-label>Email</mat-label>
+              <input
+                type="email"
+                matInput
+                placeholder="Ex. test@example.com"
+                name="email"
+                [(ngModel)]="UserRegis.email"
+                required
+                email
+              />
+            </mat-form-field>
+
+            <!-- password -->
+            <mat-form-field class="example-full-width">
+              <mat-label>Password</mat-label>
+              <input
+                type="password"
+                matInput
+                name="password"
+                [(ngModel)]="UserRegis.password"
+                #password="ngModel"
+                required
+                minlength="6"
+              />
+              <!-- <span matSuffix class="cursor-pointer" style="font-weight: 500"
+                >Show</span
+              > -->
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <mat-label>Confirm Password</mat-label>
+              <input
+                type="password"
+                matInput
+                name="confirm-password"
+                [pattern]="password.value"
+                ngModel
+                #confirmPassword="ngModel"
+              />
+              <!-- <span matSuffix class="cursor-pointer" style="font-weight: 500"
+                >Show</span > -->
+            </mat-form-field>
+
+            <button
+              mat-raised-button
+              class="main-btn full-w-btn fw-bold"
+              [disabled]="regisFrom.invalid"
+              (click)="Register()"
+            >
+              Register
+            </button>
+            <p
+              class="text-center mt-3 cursor-pointer"
+              data-bs-toggle="modal"
+              data-bs-target="#loginModal"
+            >
+              Login
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

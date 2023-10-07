@@ -1,0 +1,75 @@
+<div class="container search mt-2">
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-bar" aria-label="breadcrumb">
+    <ol class="breadcrumb mt-3 mb-3">
+      <li class="breadcrumb-item">
+        <a routerLink="/" class="text-decoration-none fw-bolder fs-6">Home</a>
+      </li>
+      <li class="breadcrumb-item active fw-bolder fs-6" aria-current="page">
+        Search for {{ keyword }}
+      </li>
+    </ol>
+  </nav>
+
+  <!-- product list -->
+  <!-- header -->
+  <div
+    class="product-list-header d-flex justify-content-between align-items-center mb-2"
+  >
+    <p class="h2">Search for: {{ keyword }}</p>
+
+    <!-- pagination -->
+    <div class="btn-change-page" *ngIf="(productList?.length || 0) >= 1">
+      <button
+        class="btn btn-paginator"
+        [disabled]="pageEvent.pageIndex <= 0"
+        (click)="goToPage(pageEvent.pageIndex - 1)"
+      >
+        <i class="fa-solid fa-angles-left"></i>
+      </button>
+      <button
+        class="btn btn-paginator ms-1"
+        [disabled]="pageEvent.pageIndex + 1 >= totalPages"
+        (click)="goToPage(pageEvent.pageIndex + 1)"
+      >
+        <i class="fa-solid fa-angles-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- list -->
+  <div class="row g-3" *ngIf="(productList?.length || 0) >= 1">
+    <div
+      class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3"
+      *ngFor="let productItem of productList"
+    >
+      <app-product-item
+        [productItem]="productItem"
+        [userId]="userId"
+      ></app-product-item>
+    </div>
+  </div>
+
+  <div class="no-product mb-3" *ngIf="(productList?.length || 0) < 1">
+    <p class="h3">Ops! Have no product!!!</p>
+    <a
+      routerLink="/"
+      class="text-decoration-none text-warning fs-4 fw-bold mt-2 "
+    >
+      <i class="fa-solid fa-arrow-rotate-left"></i> Go back to Home</a
+    >
+  </div>
+
+  <!-- Pagination -->
+  <div class="home-paginator" *ngIf="(productList?.length || 0) >= 1">
+    <mat-paginator
+      [length]="length"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      [pageIndex]="pageEvent.pageIndex"
+      (page)="goPage($event)"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  </div>
+</div>

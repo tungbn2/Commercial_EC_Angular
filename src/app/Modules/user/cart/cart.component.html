@@ -1,0 +1,181 @@
+<div class="container">
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-bar" aria-label="breadcrumb">
+    <ol class="breadcrumb mt-3 mb-3">
+      <li class="breadcrumb-item">
+        <a routerLink="/" class="text-decoration-none fw-bolder fs-6">Home</a>
+      </li>
+      <li class="breadcrumb-item active fw-bolder fs-6" aria-current="page">
+        Shopping Cart
+      </li>
+    </ol>
+  </nav>
+
+  <!-- shopping-cart -->
+  <div class="shopping-cart">
+    <p class="h2">Shopping Cart</p>
+
+    <div class="row">
+      <!-- product-list -->
+      <div class="product-list col-12" *ngIf="itemList.length !== 0">
+        <table class="cart__table cart-table">
+          <thead class="cart-table__head">
+            <tr class="cart-table__row">
+              <th class="cart-table__column cart-table__column--image">
+                Image
+              </th>
+              <th class="cart-table__column cart-table__column--product">
+                Product
+              </th>
+              <th class="cart-table__column cart-table__column--price">
+                Price
+              </th>
+              <th class="cart-table__column cart-table__column--quantity">
+                Quantity
+              </th>
+              <th class="cart-table__column cart-table__column--total">
+                Total
+              </th>
+              <th class="cart-table__column cart-table__column--remove"></th>
+            </tr>
+          </thead>
+          <tbody class="cart-table__body">
+            <tr
+              class="cart-table__row ng-star-inserted"
+              *ngFor="let item of itemList; index as i"
+            >
+              <td class="cart-table__column cart-table__column--image">
+                <div class="product-image ng-star-inserted">
+                  <a
+                    class="product-image__body"
+                    routerLink="/product/{{ item.productId }}"
+                  >
+                    <img
+                      class=""
+                      [src]="item.itemInfor?.imgUrl || ''"
+                      [appImgErr]="
+                        'https://hanoicomputercdn.com/media/product/58134_hp_p21v__5_.png'
+                      "
+                      alt=""
+                      width="100%"
+                    />
+                  </a>
+                </div>
+                <!---->
+              </td>
+              <td class="cart-table__column cart-table__column--product">
+                <a
+                  class="cart-table__product-name text-decoration-none h5 text-wrap text-break"
+                  routerLink="/product/{{ item.productId }}"
+                  >{{ item.itemInfor?.name }}</a
+                ><!---->
+              </td>
+              <td
+                data-title="Price"
+                class="cart-table__column cart-table__column--price"
+              >
+                ${{ item.price }}
+              </td>
+              <td
+                data-title="Quantity"
+                class="cart-table__column cart-table__column--quantity"
+              >
+                <input
+                  type="number"
+                  class="form-control text-center"
+                  [(ngModel)]="item.quantity"
+                  (change)="ChangeQuantity(item)"
+                  min="1"
+                  [max]="item.itemInfor?.countInStock || 1"
+                  style="width: 100px"
+                />
+              </td>
+              <td
+                data-title="Total"
+                class="cart-table__column cart-table__column--total"
+              >
+                ${{ item.price * item.quantity }}
+              </td>
+              <td class="cart-table__column cart-table__column--remove">
+                <button
+                  class="btn btn-light btn-sm btn-svg-icon text-warning"
+                  (click)="DeleteItem(item)"
+                >
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </td>
+            </tr>
+            <!---->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- no-product in cart -->
+      <div class="no-product col-12" *ngIf="itemList.length == 0">
+        <p class="h3">Ops! Have no product in Cart</p>
+        <a
+          routerLink="/"
+          class="text-decoration-none text-warning fs-4 fw-bold"
+        >
+          <i class="fa-solid fa-cart-plus"></i> Continue for shopping</a
+        >
+      </div>
+
+      <!-- checkout-info -->
+      <div class="col-12 mt-4 mb-4">
+        <div class="checkout-info row justify-content-end">
+          <div class="col-12 col-md-6 col-lg-4 border p-3">
+            <p class="h2">Cart Totals</p>
+
+            <!-- subtotal -->
+            <div class="Subtotal">
+              <div class="row">
+                <div class="col-6"><p class="h5">Subtotal:</p></div>
+                <div class="col-6">
+                  <p class="h5 text-end text-secondary">
+                    {{ orderDetail?.totalPrice || 0 | currency }}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Shipping -->
+            <div class="Shipping">
+              <div class="row">
+                <div class="col-6"><p class="h5">Shipping:</p></div>
+                <div class="col-6">
+                  <p class="h5 text-end text-secondary">Free</p>
+                </div>
+              </div>
+            </div>
+
+            <hr />
+
+            <!-- Total -->
+            <div class="Total">
+              <div class="row">
+                <div class="col-6"><p class="h4">Total</p></div>
+                <div class="col-6">
+                  <p class="h4 text-end text-secondary">
+                    {{ orderDetail?.totalPrice || 0 | currency }}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Btn -->
+            <div class="button mt-3 d-grid">
+              <button
+                class="btn btn-checkout fs-5 fw-bold"
+                [disabled]="itemList.length == 0"
+                (click)="GoToCheckout()"
+              >
+                Proceed To Checkout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

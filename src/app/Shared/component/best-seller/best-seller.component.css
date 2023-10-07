@@ -1,0 +1,11 @@
+.btn-carousel {
+  color: rgb(54, 54, 54);
+  border: solid 1px white;
+
+  padding: 10px;
+}
+
+.btn-carousel:hover {
+  color: black;
+  background-color: #ffd333;
+}

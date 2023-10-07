@@ -1,0 +1,126 @@
+<div class="my-profile container mt-2 mb-2">
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-bar" aria-label="breadcrumb">
+    <ol class="breadcrumb mt-3 mb-3">
+      <li class="breadcrumb-item">
+        <a routerLink="/" class="text-decoration-none fw-bolder fs-6">Home</a>
+      </li>
+      <li class="breadcrumb-item active fw-bolder fs-6" aria-current="page">
+        My-Profile
+      </li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <!--  left nav -->
+    <div class="col-12 col-md-3">
+      <div class="list-group d-none d-md-block">
+        <!-- item -->
+        <a
+          routerLink="/my-profile"
+          class="list-group-item list-group-item-action item-active"
+          aria-current="true"
+        >
+          <p class="h5 mt-2 mb-2">My Profile</p>
+        </a>
+
+        <!-- item -->
+        <a
+          routerLink="/order-history"
+          class="list-group-item list-group-item-action"
+          aria-current="true"
+        >
+          <p class="h5 mt-2 mb-2 text-secondary">Order History</p>
+        </a>
+
+        <!-- item -->
+        <a
+          class="list-group-item list-group-item-action"
+          aria-current="true"
+          (click)="Logout()"
+        >
+          <p class="h5 mt-2 mb-2 text-warning">Logout</p>
+        </a>
+      </div>
+    </div>
+
+    <!-- right table -->
+    <div class="col-12 col-md-9">
+      <!-- My-profile -->
+      <div class="row border rounded bg-gray p-4">
+        <!-- avatar -->
+        <div class="col-3">
+          <img
+            class="avatar rounded-circle"
+            [src]="userInfo?.avatar || ''"
+            [appImgErr]="
+              'https://cf.shopee.vn/file/e78672db6328f6c20b1c407a7b92c676_tn'
+            "
+            alt=""
+            width="100%"
+          />
+        </div>
+
+        <!-- information -->
+        <div class="col-9">
+          <p class="h2">{{ userInfo?.username }}</p>
+
+          <!-- email -->
+          <p class="fs-5">
+            <span class="fw-bold">Email:</span>
+            <span> {{ userInfo?.email }}</span>
+            <button
+              class="btn btn-outline-danger btn-sm d-block d-md-inline ms-md-3 fw-bold"
+              *ngIf="!userInfo?.isEmailVerified"
+              (click)="VerifyEmail()"
+            >
+              <span>Verify Email</span>
+            </button>
+
+            <i
+              class="fa-solid fa-circle-check text-success ms-2"
+              *ngIf="userInfo?.isEmailVerified"
+            ></i>
+          </p>
+
+          <!-- contact -->
+          <p class="fs-5">
+            <span class="fw-bold">Contact:</span>
+            <span> {{ userInfo?.contact || "123456789" }}</span>
+          </p>
+
+          <!-- address -->
+          <p class="fs-5">
+            <span class="fw-bold">Address:</span>
+            <span> Hanoi</span>
+          </p>
+
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <button
+                class="btn btn-add fs-6 fw-bold mt-1 w-100"
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#editProfile"
+              >
+                Edit Profile
+              </button>
+            </div>
+
+            <div class="col-12 d-md-none">
+              <button
+                class="btn btn-danger fs-6 fw-bold mt-1 w-100"
+                type="button"
+                (click)="Logout()"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-edit></app-edit>

@@ -1,0 +1,74 @@
+<div class="user-list">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item cursor-pointer" routerLink="">Dashboard</li>
+      <li class="mx-2">/</li>
+      <li class="breadcrumb-item active" aria-current="page">User List</li>
+    </ol>
+  </nav>
+  <div class="title d-flex justify-content-between align-items-center mb-4">
+    <h3 class="title-name">User List</h3>
+    <div class="title-left">
+      <button type="button" class="btn btn-secondary file-input">
+        <input
+          type="file"
+          name="file-input"
+          id="file-input"
+          hidden
+          class="file-input__input"
+          (change)="onReadExcel($event)"
+          #inputFile
+        />
+        <label class="file-input__label" for="file-input" style="font-weight: 400;">
+          <span>Import</span></label
+        >
+      </button>
+      <button type="button" class="btn btn-success mx-3" (click)="exportExcel()">Export</button>
+      <button type="button" class="btn btn-warning" style="font-weight: 550;" routerLink="../users/create-user">New User</button>
+    </div>
+  </div>
+  <app-table
+    [templateOutlet]="templateOutlet"
+    [listColumnNames]="listUserColumnNames"
+    [listData]="listData"
+    [placeholderKey]="'user'"
+    [filterOptional]="false"
+    [totalItems]="totalItems"
+    (handleDeleteById)="handleDeleteById($event)"
+    (handleChangePage)="handleChangePage($event)"
+    (handleEditById)="handleEditById($event)"
+    [minWidth]="945"
+  >
+  </app-table>
+  <!-- template custom column -->
+  <ng-template
+    #templateOutlet
+    let-column = "column"
+    let-item = "item"
+  >
+    <div class="user d-flex" *ngIf="column.value === 'username'">
+      <img [src]="item?.avatar || '../../../../../assets/images/user-avatar-default.png'" class="me-3" style="width:40px;height:40px"/>
+      <span>
+        <p class="user-name" (click)="onMoveToDetailPage(item?.id)">{{item?.username}}</p>
+        <p style="font-size: 13px;color: #91979d;">{{item?.email}}</p>
+      </span>
+    </div>
+    <div class="custom-class" *ngIf="column.value === 'isContactVerified' || column.value === 'isEmailVerified'">
+      {{item[column?.value] ? "Yes" : "No"}}
+    </div>
+    <div class="custom-class" *ngIf="column.value === 'role'">
+      <span
+        class="status-field px-3 text-center"
+        [ngClass]="item[column?.value] === 'user' ? 'user' : 'admin'"
+      >
+        {{item[column?.value] === 'user' ? "User" : "Admin"}}
+      </span>
+    </div>
+    <div class="custom-class" *ngIf="column.value === 'isActive'">
+      {{(item[column?.value]) ? "Active" : "Disable" }}
+    </div>
+    <div class="custom-class" *ngIf="column.value === 'createdAt'">
+      {{(item[column?.value]) | date }}
+    </div>
+  </ng-template>
+</div>

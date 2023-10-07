@@ -1,0 +1,93 @@
+li {
+  list-style-type: none;
+
+}
+ul {
+  margin-left: 0;
+  padding-left: 0;
+}
+p {
+  margin-bottom: 0;
+  font-size: var(--normal-fs);
+  color:#fff;
+}
+.accordion-button {
+  background-color: transparent!important;
+  box-shadow: none!important;
+}
+/* .accordion-button:not(.collapsed)::after {
+  background-image: url("../../../../assets/images/arrow-204-16.png");
+} */
+.accordion-button::after {
+  background-image:  url("../../../../assets/images/arrow-204-16.png");
+  transform: scale(0.75);
+}
+.accordion-body {
+  padding: 0;
+}
+.navigation {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 16%;
+  z-index: 25;
+}
+.navigation .header {
+  background-color: var(--yellow-main-color);
+  box-sizing: border-box;
+  height: 55px;
+  width: 100%;
+}
+.navigation .header .logo {
+  font-weight: 600;
+  font-size: var(--big-fs);
+}
+.navigation .header span {
+  background-color: #fff;
+  border-radius: 5px;
+  font-size: var(--smaller-fs);
+  text-align: center;
+  color: #000;
+}
+
+.navigation .body {
+  width: 100%;
+  height: calc(100vh - 55px);
+  background-color: var(--black-main-color);
+}
+.navigation .body .title {
+  font-size: var(--smaller-fs);
+  font-weight: 500;
+  color: var(--gray-main-color);
+}
+.navigation .body .menu-item:hover {
+  background-color: rgba(180,187,193,0.35)!important;
+}
+.navigation .body li i{
+  font-size: 18px ;
+  width: 20px;
+  box-sizing: border-box;
+  color: #fff;
+}
+.navigation .nav-menu:hover {
+  cursor: pointer;
+}
+.active-link {
+  background-color: var(--yellow-main-color);
+  z-index: 99;
+}
+@media (max-width:1024px) {
+  .navigation {
+    width:28%
+  }
+}
+@media (max-width:768px) {
+  .navigation {
+    width:35%
+  }
+}
+@media (max-width:540px) {
+  .navigation {
+    width:65%
+  }
+}

@@ -1,0 +1,68 @@
+<div class="product-list ">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item cursor-pointer" routerLink="">Dashboard</li>
+      <li class="mx-2">/</li>
+      <li class="breadcrumb-item active" aria-current="page">Product List</li>
+    </ol>
+  </nav>
+  <div class="title d-flex justify-content-between align-items-center mb-4">
+    <h3 class="title-name">Product List</h3>
+    <div class="title-left d-flex">
+      <button type="button" class="btn btn-secondary file-input">
+        <input
+          type="file"
+          name="file-input"
+          id="file-input"
+          hidden
+          class="file-input__input"
+          (change)="onReadExcel($event)"
+          #inputFile
+        />
+        <label class="file-input__label" for="file-input" style="font-weight: 400;">
+          <span>Import</span></label
+        >
+      </button>
+      <button type="button" class="btn btn-success mx-3" (click)="onExportExcel()">Export</button>
+      <button type="button" class="btn btn-warning" style="font-weight: 550;" routerLink="./create-product">New Product</button>
+    </div>
+  </div>
+
+  <app-table
+    [templateOutlet]="templateOutlet"
+    [listColumnNames]="listProductColumnNames"
+    [listData]="listData"
+    (handleFilterByField)="handleSearchProduct($event)"
+    (handleDeleteById)="handleDeleteById($event)"
+    [totalItems]="totalItems"
+    (handleChangePage)="handleChangePage($event)"
+    (handleEditById)="handleEditById($event)"
+  >
+  </app-table>
+  <!-- template custom column -->
+  <ng-template
+    #templateOutlet
+    let-column = "column"
+    let-item = "item"
+  >
+    <div class="custom-class" *ngIf="column.value === 'product'">
+      <div class="product d-flex">
+        <img [src]="item?.images[0]?.url" class="me-3" style="width:40px;height:40px"/>
+        <span>
+          <p class="product-name" >{{item?.name}}</p>
+          <p style="font-size: 13px;color: #91979d;">ID: {{item?.id}}</p>
+        </span>
+      </div>
+    </div>
+    <div class="custom-class" *ngIf="column.value === 'countInStock'">
+      <span class="status-field py-1 rounded">
+        {{item[column?.value] > 0 ? (item[column?.value] + ' items') : 'Out of stock'}}
+      </span>
+    </div>
+    <div class="custom-class" *ngIf="column.value === 'price'">
+      {{(item[column?.value]) | currency}}
+    </div>
+    <ul class="custom-class rate pb-0 mb-0" style="color: #ffd333;" *ngIf="column.value === 'rating'" [innerHTML]="renderRating(item[column?.value])">
+    </ul>
+  </ng-template>
+</div>

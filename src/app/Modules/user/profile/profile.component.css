@@ -1,0 +1,37 @@
+.btn-add {
+  background-color: #ffd333;
+}
+
+.bg-gray {
+  background-color: rgb(194, 194, 194);
+}
+
+.item-active {
+  border-left: 2px solid #ffd333;
+}
+
+.avatar {
+  aspect-ratio: 1 / 1;
+  height: auto;
+}
+
+.not-verify-email {
+  background-color: red;
+  color: white;
+  border-radius: 20px;
+  font-size: 0.75rem;
+}
+
+
+span.status-field {
+  border-radius: 15px;
+  color: #fff;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+span.status-field.verify {
+  background-color: #4b9528;
+}
+span.status-field.noVerify {
+  background-color: #e13a44;
+}

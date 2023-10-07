@@ -1,0 +1,87 @@
+<div class="order-history container mt-2 mb-2">
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-bar" aria-label="breadcrumb">
+    <ol class="breadcrumb mt-3 mb-3">
+      <li class="breadcrumb-item">
+        <a routerLink="/" class="text-decoration-none fw-bolder fs-6">Home</a>
+      </li>
+      <li class="breadcrumb-item active fw-bolder fs-6" aria-current="page">
+        Order-History
+      </li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <!--  left nav -->
+    <div class="col-12 col-md-3">
+      <div class="list-group d-none d-md-block">
+        <!-- item -->
+        <a
+          routerLink="/my-profile"
+          class="list-group-item list-group-item-action"
+          aria-current="true"
+        >
+          <p class="h5 mt-2 mb-2 text-secondary">My Profile</p>
+        </a>
+
+        <!-- item -->
+        <a
+          routerLink="/order-history"
+          class="list-group-item list-group-item-action item-active"
+          aria-current="true"
+        >
+          <p class="h5 mt-2 mb-2">Order History</p>
+        </a>
+
+        <!-- item -->
+        <a
+          class="list-group-item list-group-item-action"
+          aria-current="true"
+          (click)="Logout()"
+        >
+          <p class="h5 mt-2 mb-2 text-warning">Logout</p>
+        </a>
+      </div>
+    </div>
+
+    <!-- right table -->
+    <div class="col-12 col-md-9">
+      <!-- Order History -->
+      <!-- header -->
+      <p class="h2">Order History</p>
+      <div class="row">
+        <!-- order list -->
+        <app-table
+          [listColumnResponsive]="listColumnResponsive"
+          [templateOutlet]="templateOutlet"
+          [listColumnNames]="listOrderColumnNames"
+          [listData]="listData"
+          [filterOptional]="false"
+          [deleteItemOptional]="false"
+          [totalItems]="totalItems"
+          (handleChangePage)="handleChangePage($event)"
+          (handleEditById)="handleEditOrder($event)"
+          (idClick)="HandleItemClick($event)"
+        >
+        </app-table>
+        <!-- template custom column -->
+        <ng-template #templateOutlet let-column="column" let-item="item">
+          <div class="custom-class" *ngIf="column.value === 'totalPrice'">
+            {{ item[column?.value] | currency }}
+          </div>
+          <div class="custom-class" *ngIf="column.value === 'isPaid'">
+            <span
+              class="status-field px-3 text-center"
+              [ngClass]="item[column?.value] ? 'paided' : 'noPaided'"
+            >
+              {{ item[column?.value] ? "Yes" : "No" }}
+            </span>
+          </div>
+          <div class="custom-class" *ngIf="column.value === 'createdAt'">
+            {{ item[column?.value] | date: "shortDate" }}
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+p {
+  margin: 0;
+}
+
+.i-color {
+  color: #ffd333;
+}
+
+.mat-form-field {
+  margin-right: 12px;
+}
+
+.btn-carousel {
+  color: rgb(54, 54, 54);
+  border: solid 1px white;
+
+  padding: 10px;
+}
+
+.btn-carousel:hover {
+  color: black;
+  background-color: #ffd333;
+}
+
+.btn-paginator {
+  background-color: #ffd333;
+}
+
+.btn-paginator:hover {
+  background-color: #f8e19c;
+}

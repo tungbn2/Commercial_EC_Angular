@@ -1,0 +1,31 @@
+
+
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin-left: 0.5rem;
+}
+td {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0.65rem 0.5rem;
+}
+td:hover {
+  cursor: pointer;
+}
+.sort-icon i {
+  color: #97979d;
+}
+.sort-icon i.active {
+  color: black;
+}
+.table {
+  min-width: 900px;
+  overflow: scroll;
+}
+.table tr th:not(.space):hover {
+  background-color: #eaeff7;
+}
+.column {
+  text-overflow: ellipsis;
+}

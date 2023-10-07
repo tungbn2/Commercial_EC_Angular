@@ -1,0 +1,24 @@
+<div class="admin container-fluid" style="background-color: #f5f7fa;min-height: 100vh;">
+  <div class="row">
+    <div class="nav-admin"  ngClass="{{modeFullView ? 'hiddenMode': ''}}"  >
+      <app-navigation-admin *ngIf="!desktopResponStatus; else navAnotherScreen"></app-navigation-admin>
+      <ng-template  #navAnotherScreen>
+        <div class="overlay" (click)="toggleExtend()"></div>
+        <app-navigation-admin
+          (handleCloseOverlay)="toggleExtend()"
+        ></app-navigation-admin>
+      </ng-template>
+    </div>
+
+    <div class="content-admin" ngClass="{{(modeFullView || desktopResponStatus) ? 'fullView' : ''}}" >
+      <app-menubar-admin
+        (handleToggleExtendView)="toggleExtend()"
+        [modeFullView]="modeFullView"
+      >
+      </app-menubar-admin>
+      <div class="main py-4 px-3 mt-5 container" >
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="navigation">
+  <div class="header d-flex justify-content-between align-items-center px-3">
+    <p class="logo mb-0">SHOP APP</p>
+    <span class="px-3 fw-bold">Admin</span>
+  </div>
+  <div class="body ">
+    <p class="title p-3">APPLICATION</p>
+    <ul class="nav-menu">
+      <ng-container *ngFor="let nav of navigationList" >
+        <li
+          *ngIf="!nav?.extendList?.length;else extendNav"
+          class="py-3 px-3 menu-item d-flex align-items-center"
+          [routerLink]="'./' + nav?.navigateTo"
+          routerLinkActive="active-link"
+          [routerLinkActiveOptions]="{exact:true}"
+          (click)="onCloseOverlay()"
+        >
+          <i class={{nav?.icon}} style="color: #fff;"></i>
+          <p class="ms-3">{{nav?.name}}</p>
+        </li>
+        <ng-template #extendNav>
+          <li>
+            <div class="accordion-button menu-item d-flex align-items-center px-3 py-3" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#' +nav?.idCollapse" aria-expanded="false" [attr.aria-controls]="nav?.idCollapse">
+              <i class={{nav?.icon}} style="color: #fff;"></i>
+              <p class="ms-3">{{nav?.name}}</p>
+            </div>
+            <div id="{{nav.idCollapse}}" class="accordion-collapse collapse py-0" aria-labelledby="catalog-header">
+              <ul class="accordion-body py-0">
+                <li
+                  *ngFor="let navItem of nav?.extendList"
+                  style="width:100%" class="menu-item ps-5 py-3"
+                  [routerLink]="'./' + navItem?.navigateTo"
+                  routerLinkActive="active-link"
+                  [routerLinkActiveOptions]="{exact:true}"
+                  (click)="onCloseOverlay()"
+                >
+                  <p class="ps-1">{{navItem?.name}}</p>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ng-template>
+      </ng-container>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,130 @@
+<div class="order-detail ">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item cursor-pointer" routerLink="">Dashboard</li>
+      <li class="mx-2">/</li>
+      <li class="breadcrumb-item active cursor-pointer" routerLink="/admin/orders" aria-current="page">Order</li>
+      <li class="mx-2">/</li>
+      <li class="breadcrumb-item active" aria-current="page">Order Detail #{{order?.id}}</li>
+    </ol>
+  </nav>
+  <div class="title d-flex justify-content-between align-items-center mb-0">
+    <h3 class="title-name">Order Detail #{{order?.id}}</h3>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-lg-9">
+      <div class="form-block mx-2 mt-4 ">
+        <div class="header">
+          <ul class="time" style="list-style-type: none;">
+            <li class="my-2">
+              <i class="fas fa-calendar me-2" style="font-size: 18px;"></i>
+              Created at: {{order?.createdAt | date}}
+            </li>
+            <li class="my-2">
+              <i class="far fa-calendar-plus me-2 " style="font-size: 18px;"></i>
+              Updated at: {{order?.updatedAt | date}}
+            </li>
+            <li class="my-2" style="color: gray;">Order ID: {{order?.id}}</li>
+          </ul>
+        </div>
+        <hr>
+        <div class="row infor">
+          <div class="col-lg-4">
+            <span class="d-flex">
+              <span class="icon"><i class="fas fa-user"></i></span>
+              <ul>
+                <li>Customer</li>
+                <li>ID User: <span>{{order?.userId}}</span></li>
+                <li>Email: <span>{{customerInfor?.email || 'No Email Infor'}}</span></li>
+                <li>Phone: <span>{{customerInfor?.contact || 'No Phone Infor'}}</span></li>
+              </ul>
+            </span>
+          </div>
+          <div class="col-lg-4">
+            <span class="d-flex">
+              <span class="icon"><i class="fas fa-truck"></i></span>
+              <ul>
+                <li>Order Info</li>
+                <li>Status: <span>{{order?.status}}</span></li>
+                <li>Pay method: <span>{{order?.paymentMethod}}</span></li>
+                <li>Paided: <span>{{order?.isPaid ? 'Yes' : 'No'}}</span></li>
+              </ul>
+            </span>
+          </div>
+          <div class="col-lg-4">
+            <span class="d-flex">
+              <span class="icon"><i class="fas fa-map-marker-alt"></i></span>
+              <ul>
+                <li>Deliver to</li>
+                <li>Address: <span>{{order?.address}}</span></li>
+                <li>Contact: <span>{{order?.contact}}</span></li>
+                <li>Shipper: <span>GHTK</span></li>
+              </ul>
+            </span>
+          </div>
+        </div>
+        <hr>
+        <p class="title-block pb-2 ">Items</p>
+        <app-table
+          [templateOutlet]="templateOutlet"
+          [listColumnNames]="listOrderItemsColumnNames"
+          [filterOptional]="false"
+          [deleteItemOptional]="false"
+          [editItemOptional]="false"
+          [paginationOptional]="false"
+          [listData]="listItem"
+          [minWidth]="825"
+        >
+          <div class="total-amount d-flex justify-content-between p-2 me-3" style="min-width: 850px;">
+            <span  style="font-size: 20px; font-weight: 500;">Total Amount :</span>
+            <span style="font-size: 18px; font-weight: 500; margin-right: 8%;" class=" fw-bold">${{order?.totalPrice}}</span>
+          </div>
+        </app-table>
+        <!-- template custom column -->
+        <ng-template
+          #templateOutlet
+          let-column = "column"
+          let-item = "item"
+        >
+          <div class="custom-class" *ngIf="column.value === 'itemInfo'">
+            <div class="product d-flex">
+              <img [src]="item?.itemInfo?.images[0]?.url || 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8c2hvZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60'" class="me-3" style="width:45px;height:45px;border-radius: 3px;"/>
+              <span>
+                <p class="product-name mb-1">{{item?.itemInfo?.name}}</p>
+                <p style="font-size: 12px;color: #91979d;">SKU: {{item?.itemInfo?.category}} | Brand: {{item?.itemInfo?.brand}}</p>
+              </span>
+            </div>
+          </div>
+          <div class="custom-class" *ngIf="column.value === 'price' || column.value === 'total'">
+            {{'$'+ ((item[column?.value]) | number)}}
+          </div>
+        </ng-template>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-block mx-2 mt-4">
+        <p class="title-block pb-2 ">Update Order</p>
+        <hr class="mt-2" >
+        <form [formGroup]="orderForm">
+          <div class="input-field py-2">
+            <label>Status</label>
+            <input type="text" class="form-control mt-2" formControlName="status" />
+            <div *ngIf="isFieldValid('status')" class="text-danger">
+              <p *ngIf="isFieldHasError('status','required')">Status is required field !</p>
+            </div>
+          </div>
+          <div class="input-field py-2">
+            <label>Paided</label>
+            <select class="form-select form-control mt-2" aria-label="Default select example" formControlName="isPaid">
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </div>
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-warning mt-2" [disabled]="!orderForm.valid" (click)="onUpdateOrder(order.id)">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

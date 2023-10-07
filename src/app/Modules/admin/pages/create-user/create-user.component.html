@@ -1,0 +1,65 @@
+<div class="create-user ">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item cursor-pointer" routerLink="">Dashboard</li>
+      <li class="mx-2">/</li>
+      <li class="breadcrumb-item active cursor-pointer" routerLink="/admin/users" aria-current="page">User</li>
+      <li class="mx-2">/</li>
+      <li class="breadcrumb-item active" aria-current="page">{{isEditMode ? 'Update User # ' + userId : 'Create User'}}</li>
+    </ol>
+  </nav>
+  <form [formGroup]="userForm">
+    <div class="title d-flex justify-content-between align-items-center mb-4">
+      <h3 class="title-name">{{isEditMode ? 'Update User #' + userId : 'Create User'}}</h3>
+      <div class="title-left">
+        <button
+          type="submit"
+          class="btn btn-warning"
+          style="font-weight: 550;"
+          (click)="onSaveUser()"
+          [disabled]="!userForm?.valid || false"
+        >
+        {{isEditMode ? 'Update User' : 'Add User'}}
+        </button>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-lg-12">
+        <div class="form-block m-2">
+          <p class="title-block pb-2 ">User Information</p>
+          <hr class="mt-2" >
+          <div class="input-field required  py-2">
+            <label>User Name</label>
+            <input type="text" class="form-control mt-2" formControlName="username" />
+            <div *ngIf="isFieldValid('username')" class="text-danger">
+              <p *ngIf="isFieldHasError('username','required')">Username is required field !</p>
+            </div>
+          </div>
+          <div class="input-field required py-2">
+            <label>Email</label>
+            <input type="email" class="form-control mt-2" formControlName="email" />
+            <div *ngIf="isFieldValid('email')" class="text-danger">
+              <p *ngIf="isFieldHasError('email','required')">Email is required field !</p>
+              <p *ngIf="isFieldHasError('email','email')">Email is not valid !</p>
+            </div>
+          </div>
+          <div class="input-field required py-2">
+            <label>Password</label>
+            <input type="text" class="form-control mt-2" formControlName="password" />
+            <div *ngIf="isFieldValid('password')" class="text-danger">
+              <p *ngIf="isFieldHasError('password','required')">Password is required field !</p>
+              <p *ngIf="isFieldHasError('password','minlength')">Password must be at least 8 character !</p>
+            </div>
+          </div>
+          <div class="input-field required py-2 pb-4">
+            <label>Role</label>
+            <select class="form-select form-control mt-2" aria-label="Default select example" formControlName="role">
+              <option value="admin">Admin</option>
+              <option value="user">User</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

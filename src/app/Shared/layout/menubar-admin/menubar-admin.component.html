@@ -1,0 +1,72 @@
+<div class="header" [ngStyle]="{'width': modeFullView ? '100%' : '84%' }">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <div class="left py-1 d-flex align-items-center">
+      <span (click)="toggleExtendView()" >
+        <i class="fas fa-bars cursor-pointer" style="font-size: 20px;"></i>
+      </span>
+      <div class="input-group ms-3 search">
+        <span class="input-group-text mr-3" id="basic-addon1">
+          <i class="fas fa-search"></i>
+        </span>
+        <input type="text" class="form-control" placeholder="Search ..." aria-label="Username" aria-describedby="basic-addon1">
+      </div>
+    </div>
+    <div class="right d-flex align-items-center">
+      <div class="hover-dropdown">
+        <img src="../../../../assets/images/united-kingdom.png " id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" />
+        <ul class="dropdown-menu dropdown-menu-lg-end mt-2" aria-labelledby="dropdownMenuButton1">
+          <li class="dropdown-item">
+            <img src="../../../../assets/images/vietnam.png" />
+            <span class="ms-3" style="font-size: 15px;">VietNam</span>
+          </li>
+          <li class="dropdown-item">
+            <img src="../../../../assets/images/united-kingdom.png"/>
+            <span class="ms-3" style="font-size: 15px;">English</span>
+          </li>
+        </ul>
+      </div>
+      <div class="hover-dropdown mx-3">
+        <p class="notify" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fas fa-bell" style="font-size: 18px;"></i>
+          <span class="notify-number">3</span>
+        </p>
+        <div class="dropdown-menu dropdown-menu-lg-end notify-dropdown pb-0 mt-2"  aria-labelledby="dropdownMenuButton2">
+          <div class="px-2 d-flex justify-content-between">
+            <p class="fw-bold">Notifications</p>
+            <p class="text-primary">Mark all as read</p>
+          </div>
+          <hr class="dropdown-divider">
+          <ul class="notify-content mt-2 mb-0 ps-0">
+            <li class="d-flex align-items-center notify-item p-2">
+              <span class="notify-icon me-2">
+                <i class="fas fa-bell"></i>
+              </span>
+              <span>
+                <h6 class="notify-title">Alert timer</h6>
+                <p class="notify-description">Lorem ipsum dolor sit consectetur.</p>
+              </span>
+            </li>
+          </ul>
+          <hr class="dropdown-divider mb-0">
+          <p class="notify-item text-center py-2 mt-0 notify-description">See all 15 notifications</p>
+        </div>
+      </div>
+      <div class="hover-dropdown">
+        <div class="d-flex align-items-center" id="dropdownMenuButton3" style="cursor: pointer;" data-bs-toggle="dropdown" aria-expanded="false">
+          <img [src]="myProfile?.avatar || '../../../../assets/images/admin-default.png'" style="width:35px; height:35px;border-radius: 5px;"/>
+          <div class="ms-2">
+            <h6 style="font-size: 15px;">{{myProfile?.username}}</h6>
+            <p style="font-size: 12px;">{{myProfile?.email}}</p>
+          </div>
+        </div>
+        <ul class="dropdown-menu mt-2" aria-labelledby="dropdownMenuButton3">
+          <li><a class="dropdown-item" href="#">Profile</a></li>
+          <li><a class="dropdown-item" href="#">Inbox</a></li>
+          <li><a class="dropdown-item" href="#">Setting</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><span class="dropdown-item" (click)="signOut()" >Sign Out</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

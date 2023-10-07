@@ -1,0 +1,210 @@
+<div class="container">
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-bar" aria-label="breadcrumb">
+    <ol class="breadcrumb mt-3 mb-3">
+      <li class="breadcrumb-item">
+        <a routerLink="/" class="text-decoration-none fw-bolder fs-6">Home</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a routerLink="/cart" class="text-decoration-none fw-bolder fs-6"
+          >Cart</a
+        >
+      </li>
+      <li class="breadcrumb-item active fw-bolder fs-6" aria-current="page">
+        Checkout
+      </li>
+    </ol>
+  </nav>
+
+  <div class="checkout">
+    <div class="row">
+      <!-- product-list -->
+      <div class="col-12 col-md-7 col-lg-8 mt-2">
+        <p class="h2">Product List</p>
+        <!-- table -->
+        <table class="table table-striped">
+          <thead class="head-table">
+            <tr>
+              <th scope="col-2">Product Detail</th>
+              <th scope="col-1">Total</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <!-- item -->
+            <tr *ngFor="let item of itemList; index as i">
+              <th scope="row">
+                <div class="row">
+                  <!-- image -->
+                  <div class="col-3 col-lg-2 d-none d-sm-block">
+                    <img
+                      class=""
+                      [src]="item.itemInfor?.imgUrl || ''"
+                      [appImgErr]="
+                        'https://hanoicomputercdn.com/media/product/58134_hp_p21v__5_.png'
+                      "
+                      alt=""
+                      width="100%"
+                    />
+                  </div>
+
+                  <!-- detail -->
+                  <div class="col-9 col-lg-10">
+                    <p class="h6 mt-1 mb-1">{{ item.itemInfor?.name }}</p>
+                    <p class="fw-normal mt-1 mb-1">
+                      Quantity: x {{ item.quantity }}
+                    </p>
+                  </div>
+                </div>
+              </th>
+              <td>
+                <div class="d-flex align-items-center justify-content-center">
+                  <p class="h6 mt-1 mb-1">${{ item.price }}</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- checkout-info -->
+      <div class="col-12 col-md-5 col-lg-4 border rounded p-3 mt-2 mb-4">
+        <!-- Shipping Info -->
+        <div class="shipping-info">
+          <p class="h2">Shipping Infomation</p>
+
+          <!-- add -->
+          <p class="h6">Address:</p>
+          <p>{{ orderDetail?.address }}</p>
+
+          <!-- phone -->
+          <p class="h6">Phone Number:</p>
+          <p>{{ orderDetail?.contact || "0123456789" }}</p>
+
+          <!-- email -->
+          <p class="h6">Email Address:</p>
+          <p>{{ userInfo?.email }}</p>
+
+          <!-- btn edit -->
+          <div class="d-grid">
+            <button
+              class="btn btn-checkout fw-bold"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#editShippingInfo"
+              (click)="changeModeEdit()"
+            >
+              Edit Shipping Infomation
+            </button>
+          </div>
+        </div>
+
+        <hr />
+
+        <!-- checkout -->
+
+        <div class="checkout-detail">
+          <p class="h2">Checkout</p>
+
+          <!-- subtotal -->
+          <div class="Subtotal">
+            <div class="row">
+              <div class="col-6"><p class="h5">Subtotal:</p></div>
+              <div class="col-6">
+                <p class="h5 text-end text-secondary">
+                  ${{ orderDetail?.totalPrice }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Shipping -->
+          <div class="Shipping">
+            <div class="row">
+              <div class="col-6"><p class="h5">Shipping:</p></div>
+              <div class="col-6">
+                <p class="h5 text-end text-secondary">Free</p>
+              </div>
+            </div>
+          </div>
+
+          <hr />
+
+          <!-- Total -->
+          <div class="Total">
+            <div class="row">
+              <div class="col-6"><p class="h5">Total</p></div>
+              <div class="col-6">
+                <p class="h5 text-end">${{ orderDetail?.totalPrice }}</p>
+              </div>
+            </div>
+          </div>
+
+          <hr />
+          <!-- paymentMethod -->
+          <div class="payment-method">
+            <p class="h2">Payment Method</p>
+
+            <!-- item -->
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="paymentMethod"
+                [(ngModel)]="paymentMethod"
+                value="Online"
+                id="Online"
+                checked
+              />
+              <label class="form-check-label" for="Online"> Online </label>
+            </div>
+
+            <!-- item -->
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="paymentMethod"
+                [(ngModel)]="paymentMethod"
+                value="COD"
+                id="COD"
+              />
+              <label class="form-check-label" for="COD">
+                Cash on delivery
+              </label>
+            </div>
+
+            <!-- item -->
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="paymentMethod"
+                [(ngModel)]="paymentMethod"
+                value="PayPal"
+                id="PayPal"
+              />
+              <label class="form-check-label" for="PayPal"> PayPal </label>
+            </div>
+          </div>
+
+          <!-- Btn -->
+          <div class="d-grid mt-3">
+            <button
+              class="btn btn-checkout fw-bold"
+              type="button"
+              (click)="SubmitOrder()"
+            >
+              Place Order
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-edit-shipping
+  [address]="orderDetail?.address || ''"
+  [contact]="orderDetail?.contact || '0123456789'"
+></app-edit-shipping>

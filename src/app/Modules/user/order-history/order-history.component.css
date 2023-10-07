@@ -1,0 +1,16 @@
+.item-active {
+  border-left: 2px solid #ffd333;
+}
+
+span.status-field {
+  border-radius: 15px;
+  color: #fff;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+span.status-field.paided {
+  background-color: #4b9528;
+}
+span.status-field.noPaided {
+  background-color: #e13a44;
+}

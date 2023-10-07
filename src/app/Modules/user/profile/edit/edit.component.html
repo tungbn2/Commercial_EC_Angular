@@ -1,0 +1,105 @@
+<div
+  class="modal login-modal fade"
+  id="editProfile"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+  #loginModal
+>
+  <div class="modal-dialog modal-lg modal-lg">
+    <div class="modal-content container">
+      <div class="row mt-3">
+        <div class="modal-header">
+          <p class="modal-title h4 mb-0">Edit Profile</p>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            #closeBtn
+          ></button>
+        </div>
+
+        <!-- form -->
+        <form #editProfile="ngForm" class="mt-2">
+          <!-- Username -->
+          <div class="mb-2">
+            <label for="changeUsername" class="form-label fw-bold"
+              >Username:</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              [ngClass]="{
+                'is-valid': username.valid,
+                'is-invalid': username.invalid
+              }"
+              id="changeUsername"
+              name="username"
+              [(ngModel)]="changeData.username"
+              #username="ngModel"
+              required
+              maxlength="25"
+            />
+          </div>
+
+          <!-- contact -->
+          <div class="mb-2">
+            <label for="changeContact" class="form-label fw-bold"
+              >Contact:</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              [ngClass]="{
+                'is-valid': contact.valid,
+                'is-invalid': contact.invalid
+              }"
+              id="changeContact"
+              name="contact"
+              [(ngModel)]="changeData.contact"
+              #contact="ngModel"
+              required
+              pattern="[0][0-9]{9,10}"
+            />
+            <div id="changeContact" class="invalid-feedback">
+              Must be syntax of number phone. Ex: 0123456789
+            </div>
+          </div>
+
+          <!-- avatar -->
+          <div class="mb-2">
+            <label for="changeAvatar" class="form-label fw-bold">Avatar:</label>
+            <input
+              type="file"
+              class="form-control"
+              [ngClass]="{ 'is-valid': fileUploaded }"
+              id="changeAvatar"
+              name="avatar"
+              ngModel
+              (change)="UploadFile($event)"
+              #avatarInput = "ngModel"
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-yellow mt-2 mb-2 fw-bold"
+            (click)="submitForm()"
+          >
+            Change Profile
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-danger ms-2 mt-2 mb-2 fw-bold"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >
+            Cancel
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

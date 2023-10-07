@@ -1,0 +1,150 @@
+<div class="card">
+  <div
+    class="search-field d-flex align-items-center mb-3"
+    *ngIf="filterOptional"
+  >
+    <div class="input-group px-3 pt-3 pb-1">
+      <span class="input-group-text" id="basic-addon1">
+        <i class="fas fa-search"></i>
+      </span>
+      <input
+        type="text"
+        class="form-control"
+        [formControl]="tableName"
+        placeholder="Start typing to search {{ placeholderKey }}"
+        aria-label="Username"
+        aria-describedby="basic-addon1"
+      />
+    </div>
+  </div>
+  <hr class="my-0" style="margin: 0" />
+  <div class="table-container table-responsive">
+    <table class="table" [ngStyle]="{'min-width.px': minWidth}">
+      <thead>
+        <tr>
+          <!-- header -->
+          <th style="width:5px" class="space"></th>
+          <th
+            class="ps-2"
+            *ngFor="let column of listColumnNames; index as i"
+            (click)="sortByField(column.value)"
+            valign="middle"
+          >
+            <span>{{ column.name }}</span>
+            <div
+              class="sort-icon d-flex flex-column mt-1 me-2"
+              style="float: right"
+            >
+              <i
+                class="fas fa-sort-up"
+                [ngClass]="{ active: !reverse && key === column.value }"
+              ></i>
+              <i
+                class="fas fa-sort-down"
+                [ngClass]="{ active: reverse && key === column.value }"
+                style="margin-top: -0.85rem"
+              ></i>
+            </div>
+          </th>
+          <th class="ps-2 py-3" *ngIf="deleteItemOptional || editItemOptional">Actions</th>
+        </tr>
+      </thead>
+
+      <!-- body -->
+      <tbody *ngIf="listData.length > 0 ? true : false">
+        <tr
+          *ngFor="
+            let item of listData
+              | orderBy: key:reverse
+              | paginate
+                : {
+                    itemsPerPage: params?.size,
+                    currentPage: params?.page,
+                    totalItems: totalItems
+                  };
+            index as i
+          "
+          (click)="HandleItemClick(item.id)"
+        >
+          <td></td>
+          <td
+            *ngFor="let column of listColumnNames"
+            class="column ps-2"
+            valign="middle"
+          >
+            <ng-container
+              *ngIf="column.custom; else anotherColumn"
+              [ngTemplateOutlet]="templateOutlet"
+              [ngTemplateOutletContext]="{ column: column, item: item }"
+            >
+            </ng-container>
+            <ng-template #anotherColumn>
+              {{ item[column?.value] ? item[column?.value] : "Null" }}
+            </ng-template>
+          </td>
+          <td>
+            <!-- edit icon -->
+            <span
+              class="edit-btn me-2"
+              *ngIf="editItemOptional"
+              (click)="onEditItem(item.id)"
+            >
+              <i
+                class="fas fa-edit"
+                style="color: #387b18; font-size: 20px"
+              ></i>
+            </span>
+
+            <!-- delete icon -->
+            <span
+              *ngIf="deleteItemOptional"
+              class="delete-btn"
+              data-bs-toggle="modal"
+              [attr.data-bs-target]="'#deleteConfirmModal' + item?.id"
+            >
+              <i
+                class="fas fa-trash"
+                style="color: #f02020; font-size: 20px"
+              ></i>
+              <app-alert-popup
+                [idModal]="'deleteConfirmModal' + item?.id"
+                [titleModal]="'Confirm Delete'"
+                [contentModal]="
+                  'Are you sure to delete ' +
+                  placeholderKey +
+                  ' #' +
+                  item?.id +
+                  '?'
+                "
+                [nameBtn]="'Delete'"
+                [typeBtn]="'btn-danger'"
+                [idItem]="item?.id"
+                (hanldeActionPopup)="onDeleteItem(item.id)"
+              >
+              </app-alert-popup>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-content select=".total-amount"></ng-content>
+    <div *ngIf="listData.length === 0">
+      <h1 class="d-flex justify-content-center">No data avaiable in table</h1>
+    </div>
+    <div class="has-text-centered d-flex justify-content-between pe-3" *ngIf="listData.length > 0 && paginationOptional ? true : false ">
+      <pagination-controls
+        (pageChange)="onHandleChangePage($event)"
+      ></pagination-controls>
+
+      <div class="number-perpage d-none d-md-block">
+        <span> Rows per page </span>
+        <select (change)="onSelectNumberPerPage($event)">
+          <option value="5">5</option>
+          <option value="10" [defaultSelected]="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>

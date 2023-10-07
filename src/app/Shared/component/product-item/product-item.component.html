@@ -1,0 +1,70 @@
+<div>
+  <div class="card rounded" style="width: 100%">
+    <img
+      [src]="productItem.images[0]?.url"
+      class="card-img-top item-img"
+      alt="..."
+      onerror="this.src = 'https://cdn.shopify.com/s/files/1/0070/7032/files/trending-products_c8d0d15c-9afc-47e3-9ba2-f7bad0505b9b.png?format=jpg&quality=90&v=1614559651' "
+      style="cursor: pointer"
+      (click)="ToProduct()"
+    />
+    <div class="card-body">
+      <div
+        class="header-item text-wrap text-break"
+        style="cursor: pointer"
+        (click)="ToProduct()"
+      >
+        <p class="card-title h5 text-wrap text-break">{{ productItem.name }}</p>
+      </div>
+
+      <!-- rating -->
+      <div class="row mt-1">
+        <div class="col-12">
+          <ul
+            class="custom-class rate p-0 m-0 bg-star d-inline"
+            [innerHTML]="renderRating(productItem.rating)"
+          ></ul>
+
+          <span> | {{ productItem.numOfReviews }} Reviews</span>
+        </div>
+      </div>
+
+      <!-- price -->
+      <div class="row mt-3">
+        <div class="col-9">
+          <p class="h4">{{ productItem.price | currency }}</p>
+        </div>
+        <div
+          class="col-3"
+          style="cursor: pointer"
+          (click)="AddToCart()"
+          *ngIf="userId && productItem.countInStock > 0"
+        >
+          <i class="fa-solid fa-cart-plus h4"></i>
+        </div>
+      </div>
+
+      <!-- stock -->
+      <div class="row">
+        <div class="col-6">
+          <p class="text-danger m-0">Sale off 50%</p>
+        </div>
+
+        <div class="col-6">
+          <p
+            class="text-success text-end m-0"
+            *ngIf="productItem.countInStock > 0"
+          >
+            <i class="fa-solid fa-check"></i> In Stock
+          </p>
+          <p
+            class="text-danger text-end m-0"
+            *ngIf="productItem.countInStock <= 0"
+          >
+            Out Of Stock
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

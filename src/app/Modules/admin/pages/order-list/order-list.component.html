@@ -1,0 +1,48 @@
+<div class="order-list">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item cursor-pointer" routerLink="">Dashboard</li>
+      <li class="mx-2">/</li>
+      <li class="breadcrumb-item active" aria-current="page">Order List</li>
+    </ol>
+  </nav>
+  <div class="title d-flex justify-content-between align-items-center mb-4">
+    <h3 class="title-name">Order List</h3>
+    <div class="title-left d-flex">
+      <button type="button" class="btn btn-success mx-3" (click)="exportExcel()">Export</button>
+    </div>
+  </div>
+  <app-table
+    [templateOutlet]="templateOutlet"
+    [listColumnNames]="listOrderColumnNames"
+    [listData]="listData"
+    [filterOptional]="false"
+    [deleteItemOptional]="false"
+    [totalItems]="totalItems"
+    (handleChangePage)="handleChangePage($event)"
+    (handleEditById)="handleEditOrder($event)"
+  >
+  </app-table>
+  <!-- template custom column -->
+  <ng-template
+    #templateOutlet
+    let-column = "column"
+    let-item = "item"
+  >
+    <div class="custom-class" *ngIf="column.value === 'totalPrice'">
+      {{(item[column?.value]) | currency}}
+    </div>
+    <div class="custom-class" *ngIf="column.value === 'isPaid'">
+      <span
+        class="status-field px-3 text-center"
+        [ngClass]="item[column?.value] ? 'paided' : 'noPaided'"
+        (click)="onUpdateIsPaided(item?.id)"
+      >
+        {{item[column?.value] ? "Yes" : "No"}}
+      </span>
+    </div>
+    <div class="custom-class" *ngIf="column.value === 'createdAt'">
+      {{(item[column?.value]) | date}}
+    </div>
+  </ng-template>
+</div>

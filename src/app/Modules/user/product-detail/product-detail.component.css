@@ -1,0 +1,47 @@
+.i-yellow {
+  color: #ffd333;
+  background-color: grey;
+
+  width: 30px;
+  height: 30px;
+}
+
+.bg-star {
+  color: #ffd333;
+}
+
+.border-quantity {
+  border: solid 1px rgb(150, 150, 150);
+  border-radius: 5px;
+}
+
+.btn-add {
+  background-color: #ffd333;
+}
+
+.text-yellow {
+  color: #ffd333;
+  cursor: cell;
+}
+
+.page-item.active .page-link {
+  background-color: #ffd333 !important;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.avatar,
+.slide-img {
+  aspect-ratio: 1 / 1;
+  height: auto;
+}

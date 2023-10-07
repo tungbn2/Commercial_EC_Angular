@@ -1,0 +1,82 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+:root {
+  /* color variable */
+  --yellow-main-color: #ffd333;
+  --black-main-color: #3d464d;
+  --gray-main-color: #c4c4c4;
+
+  /* font-size variable */
+  --smaller-fs: 12px;
+  --small-fs: 15px;
+  --normal-fs: 18px;
+  --big-fs: 25px;
+  --bigger-fs: 32px;
+  --giant-fs: 40px;
+}
+
+.cursor-pointer:hover {
+  cursor: pointer;
+}
+/* .modal-backdrop {
+  display: none!important;
+} */
+
+@media (max-width: 912px) {
+  .modal-dialog {
+    max-width: 650px;
+  }
+  .modal-dialog p.title {
+    font-size: 1.25rem !important;
+  }
+}
+
+.main-btn {
+  background-color: var(--yellow-main-color);
+  color: #000;
+  font-weight: 500;
+  font-size: var(--normal-fs);
+  padding: 0;
+}
+
+.full-w-btn {
+  width: 100% !important;
+}
+
+.btn-close {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.modal-dialog p.title {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.modal-dialog .name-logo {
+  font-size: 3.5rem;
+  font-weight: 500;
+}
+.hidden {
+  display: none!important;
+}
